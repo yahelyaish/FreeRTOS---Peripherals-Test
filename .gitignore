@@ -1,0 +1,49 @@
+# ===== Build outputs =====
+Debug/
+Release/
+build/
+out/
+
+# ===== STM32CubeIDE / Eclipse =====
+.metadata/
+.settings/
+.project
+.cproject
+*.launch
+
+# ===== Object / binary files =====
+*.o
+*.a
+*.elf
+*.hex
+*.bin
+*.map
+*.d
+*.su
+
+# ===== IDE temporary files =====
+*.log
+*.tmp
+*.bak
+*.swp
+*.~*
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+
+# ===== VS Code (אם משתמש) =====
+.vscode/
+
+# ===== CubeMX generated (optional) =====
+# אם אתה רוצה לשמור רק את ה-.ioc
+# ושהקוד ייווצר מחדש:
+# Core/
+# Drivers/
+# Middlewares/
+
+# ===== CMake (אם קיים) =====
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
