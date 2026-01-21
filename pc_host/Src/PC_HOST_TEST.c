@@ -15,7 +15,7 @@
 #define PERIPH_I2C  0x01
 #define PERIPH_SPI  0x02
 #define PERIPH_MAX  3
-
+const char* peripStr[PERIPH_MAX]={"UART","I2C","SPI"};
 uint8_t testCnt;
 
 int main(void)
@@ -46,9 +46,10 @@ int main(void)
     //build+send packet
     packet_t rx_pkt;
 
-    for (int periph = PERIPH_SPI; periph < PERIPH_MAX; periph++)
+    for (int periph = PERIPH_UART; periph < PERIPH_MAX ; periph++)
     {
-        printf("sending periph: %d\n",periph);
+        printf("\n--------------------\n");
+        printf("\nsending periph: %s\n",peripStr[periph]);
     packet_t tx_pkt;
     memset(&tx_pkt, 0, sizeof(tx_pkt));
 
@@ -70,15 +71,16 @@ int main(void)
          continue;
 }
         if (rx_pkt.payload_len == 0) {
-            printf("ACK received for test %u\n", rx_pkt.test_id);
+            printf("\nACK received for test number %u of periph: %s\n", rx_pkt.test_id,peripStr[periph]);
             continue;
         }
         else {
-            printf("RESULT received for test %u\n", rx_pkt.test_id);
+            printf("\nRESULT received for test number %u of periph: %s\n", rx_pkt.test_id,peripStr[periph]);
             printf("Result = %s\n",
                 rx_pkt.payload[0] ? "PASS" : "FAIL");
                    break;
         }
+                printf("\n--------------------\n");
     }
     }
 

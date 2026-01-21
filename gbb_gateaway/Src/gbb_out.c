@@ -65,12 +65,12 @@ int main(void)
 
         if (cmd->payload_len != len - header_len)
             continue;
-
+        printf("\n-------------------------\n");
         printf("\nCMD received from %s:%d\n",
                inet_ntoa(client_addr.sin_addr),
                ntohs(client_addr.sin_port));
 
-        printf("test_id= %u peripheral= %s iterations= %u payload_len= %u\n",
+        printf("test_id = %u\nperipheral = %s\niterations = %u\npayload_len = %u\n",
                cmd->test_id, str[cmd->peripheral],
                cmd->iterations, cmd->payload_len);
 
@@ -79,15 +79,13 @@ int main(void)
         packet_t ack;
         build_ack(&ack, cmd);
         send_packet_udp(sock, &client_addr, &ack);
-        printf("ACK sent for test %u\n", ack.test_id);
+        printf("\nACK sent for test %u\n", ack.test_id);
 
         /* --------  STM tests ---------- */
 
         packet_t result;
         size_t uart_rx_len = offsetof(packet_t, payload) + 1;
-        printf("sending packet through uart: \n");
         uart_write(uart_fd, cmd, sizeof(packet_t));
-        printf("done sending packet through uart: \n");
 
         if (uart_wait_for_response(uart_fd,
                            &result,
@@ -97,10 +95,11 @@ int main(void)
         }
 
         send_packet_udp(sock, &client_addr, &result);
-        printf("RESULT sent for test %u (status=%s)\n",
+        printf("\nRESULT sent for test %u (status=%s)\n",
         result.test_id,
         result.payload[0] ? "PASS" : "FAIL");
     }
+
 
     close(sock);
     return 0;
